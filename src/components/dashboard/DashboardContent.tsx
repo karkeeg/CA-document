@@ -155,7 +155,6 @@ export function DashboardContent({ userEmail }: DashboardContentProps) {
             {userEmail.charAt(0).toUpperCase()}
           </div>
           <h2 className="text-2xl font-bold text-primary mb-1">{userEmail.split('@')[0]}</h2>
-          <p className="text-secondary text-sm font-medium uppercase tracking-wider">Administrator</p>
           
           <div className="w-full mt-8 pt-6 border-t border-border space-y-4">
             <div>

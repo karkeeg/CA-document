@@ -19,7 +19,6 @@ export async function GET(request: Request) {
       user: {
         id: user.id,
         email: user.email,
-        role: user.role,
         emailVerified: user.emailVerified,
       },
     });
