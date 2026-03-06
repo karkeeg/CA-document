@@ -14,10 +14,18 @@ if (!process.env.DATABASE_URL) {
 const prismaClientSingleton = () => {
   const connectionString = process.env.DATABASE_URL;
   
+  if (!connectionString) {
+    console.error("❌ DATABASE_URL is missing! Prisma will likely fail.");
+  } else {
+    // Masked log for security
+    const host = connectionString.split('@')[1]?.split('/')[0] || "unknown";
+    console.log(`🐘 Prisma: Connection String found. Host: ${host}`);
+  }
+
   const pool = new pg.Pool({ 
     connectionString,
-    connectionTimeoutMillis: 10000, // 10s timeout
-    max: 10, // Adjust based on your Neon tier
+    connectionTimeoutMillis: 10000, 
+    max: 10,
   });
 
   const adapter = new PrismaPg(pool);
