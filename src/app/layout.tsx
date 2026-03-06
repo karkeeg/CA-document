@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Zero Trust Auth",
-  description: "Secure Authentication System",
+  title: "CA Document",
+  description: "CA Document",
 };
 
 export default function RootLayout({

@@ -53,7 +53,11 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true, message: "Email verified successfully" });
 
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === 'P1001' || error.message?.includes('P1001') || error.message?.includes('database server')) {
+      console.error("Database connection error (P1001):", error);
+      return NextResponse.json({ error: "Authentication database unreachable. Please retry soon." }, { status: 503 });
+    }
     console.error("Verification error:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }

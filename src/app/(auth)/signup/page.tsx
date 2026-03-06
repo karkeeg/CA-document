@@ -6,101 +6,33 @@ import Link from "next/link";
 
 export default function SignupPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (error) {
-      const timer = setTimeout(() => {
-        setError("");
-      }, 7000);
-      return () => clearTimeout(timer);
-    }
-  }, [error]);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
-
-    try {
-      const res = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Signup failed");
-      }
-
-      if (data.requiresVerification) {
-        router.push("/verify-email");
-      } else {
-        router.push("/dashboard");
-      }
-      router.refresh();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Signup failed");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
-    <>
-      <div className="auth-header">
-        <h1>Create Account</h1>
-        <p>Join CA-Document for zero-trust protection</p>
+    <div className="animate-[fadeIn_0.5s_ease-out]">
+      <div className="mb-10 text-center lg:text-left">
+        <h1 className="text-4xl font-extrabold text-primary mb-3 tracking-tight">Access Control</h1>
+        <p className="text-secondary text-lg">This is a private administrative system.</p>
       </div>
 
-      {error && <div className="error-message">{error}</div>}
-
-      <form onSubmit={handleSubmit}>
-        <div className="input-group">
-          <label className="input-label" htmlFor="email">Email Address</label>
-          <input
-            id="email"
-            type="email"
-            className="input-field"
-            placeholder="name@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="input-group">
-          <label className="input-label" htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            className="input-field"
-            placeholder="Min. 12 characters"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            minLength={12}
-          />
-          <p className="input-helper">
-            Use at least 12 characters with a mix of letters and symbols.
-          </p>
-        </div>
-
-        <button type="submit" className="btn-primary" disabled={loading} style={{ marginTop: "1.5rem" }}>
-          {loading ? "Creating account..." : "Create account"}
-        </button>
-      </form>
-
-      <div className="auth-footer">
-        Already have an account?{" "}
-        <Link href="/login">
-          Sign in
+      <div className="p-8 bg-muted/30 border border-dashed border-border rounded-DEFAULT text-center">
+        <div className="text-4xl mb-4">🔒</div>
+        <h3 className="text-primary font-bold mb-2 text-lg">Restricted Access</h3>
+        <p className="text-secondary text-sm leading-relaxed mb-6">
+          Account creation is managed by system administrators. If you need access, please contact your administrator.
+        </p>
+        <Link 
+          href="/login" 
+          className="inline-block px-8 py-3 bg-primary text-white font-extrabold rounded-DEFAULT hover:shadow-lg transition-all"
+        >
+          Return to Login
         </Link>
       </div>
-    </>
+
+      <div className="mt-12 pt-8 border-t border-border/60 text-center">
+        <span className="text-xs font-bold text-secondary/40 uppercase tracking-widest">
+          Secure System Access Group
+        </span>
+      </div>
+    </div>
   );
 }

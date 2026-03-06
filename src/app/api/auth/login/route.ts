@@ -12,6 +12,7 @@ const loginSchema = z.object({
 });
 
 export async function POST(request: Request) {
+  console.log("LOGIN API HIT");
   try {
     // 1. Rate Limit (Critical for Login)
     const ip = request.headers.get("x-forwarded-for") || "unknown";
@@ -32,10 +33,7 @@ export async function POST(request: Request) {
     // 3. Find User
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
-      // GENERIC ERROR - prevent enumeration
-      // We simulate a password verification delay if we want strict anti-timing attacks,
-      // but Argon2 verify failure is slow enough.
-      return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
+      return NextResponse.json({ error: "User not found" }, { status: 401 });
     }
 
     // NEW: Check Email Verification
@@ -58,7 +56,11 @@ export async function POST(request: Request) {
       user: { id: user.id, email: user.email },
     });
 
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === 'P1001' || error.message?.includes('P1001') || error.message?.includes('database server')) {
+      console.error("Database connection error (P1001):", error);
+      return NextResponse.json({ error: "Database is temporarily unreachable. Please try again in 30 seconds." }, { status: 503 });
+    }
     console.error("Login error:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }

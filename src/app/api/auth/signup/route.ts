@@ -81,7 +81,11 @@ export async function POST(request: Request) {
       message: "Please check your email to verify your account.",
     });
 
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === 'P1001' || error.message?.includes('P1001') || error.message?.includes('database server')) {
+      console.error("Database connection error (P1001):", error);
+      return NextResponse.json({ error: "Database service is temporarily down. Please try again shortly." }, { status: 503 });
+    }
     console.error("Signup error:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }

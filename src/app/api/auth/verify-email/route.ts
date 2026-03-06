@@ -41,7 +41,11 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true });
 
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === 'P1001' || error.message?.includes('P1001') || error.message?.includes('database server')) {
+      console.error("Database connection error (P1001):", error);
+      return NextResponse.json({ error: "Unable to reach database. Please check your connection and try again." }, { status: 503 });
+    }
     console.error("Verify Email error:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
