@@ -40,6 +40,10 @@ const FOLDER_LINKS: Record<string, string> = {
     "https://docs.google.com/spreadsheets/d/1jggENHrHibF3LgYcPFoDJ38lueL038gOo-zeSp3HUYM/edit?gid=1656603210#gid=1656603210",
   "Eakal to Bahul":
     "https://docs.google.com/spreadsheets/d/1vixNCXvs0atmAWnyZBxkOFB_dlJVbY-CLa_GrSHBVt0/edit?gid=418571013#gid=418571013",
+  "Initial Updation":
+    "https://docs.google.com/spreadsheets/d/1GdLzKlijP8SGZPbDAOTfGB22UHuAGCqz-71Yfx6nORA/edit?gid=843362721#gid=843362721",
+  "Annual Docs":
+    "https://docs.google.com/spreadsheets/d/1XthO7DN66Nc70CwNE--e_eJxaRYtpH252p5lNG6T3vg/edit?gid=680811236#gid=680811236",
 };
 
 const OUTPUT_LINKS: Record<string, string> = {
@@ -59,6 +63,10 @@ const OUTPUT_LINKS: Record<string, string> = {
     "https://drive.google.com/drive/folders/1SFBF4KmT-RRBXtLVPhZgW6mXXwGrgzHn",
   "Eakal to Bahul":
     "https://drive.google.com/drive/folders/1bnDTLtSeTV3JTqnD6K8h1OKhoegI_7R2",
+  "Initial Updation":
+    "https://drive.google.com/drive/folders/177-u_TmcsxP8R_kP-0cCZmjFi6E-FREm",
+  "Annual Docs":
+    "https://drive.google.com/drive/folders/1fXRgnZoLX8Jc-nJyk-DNbbdPuUx48vQV",
 };
 
 type ViewType = "dashboard" | "profile" | "output";
